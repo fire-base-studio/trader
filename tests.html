@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trader - n8n Test</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
+        .test-case { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
+        button { cursor: pointer; padding: 10px 20px; font-size: 16px; }
+        .status { font-weight: bold; margin-top: 5px; }
+        .fail { color: red; }
+        .success { color: green; }
+        .pending { color: orange; }
+        iframe { width: 100%; height: 200px; border: 1px dashed #666; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h1>trader</h1>
+    <p>Экспериментальный трейдинг-бот. Демонстрация связки Telegram Mini App → локальный n8n → JS / Lua → QUIK → брокеры → биржи.</p>
+
+    <h2>n8n: Тестирование обхода Mixed Content</h2>
+
+    <div class="test-case">
+        <h4>Тест 1: Простая ссылка (HTML &lt;a&gt;)</h4>
+        <a href="http://[fcac::]:5678" style="text-decoration: none;">
+            <button>porebrik.spb.ru (Standard)</button>
+        </a>
+        <div class="status fail">Результат: FAIL (Mixed Content Error)</div>
+    </div>
+
+    <div class="test-case">
+        <h4>Тест 2: Ссылка с target="_blank"</h4>
+        <a href="http://[fcac::]:5678" target="_blank" style="text-decoration: none;">
+            <button>porebrik.spb.ru (Target _blank)</button>
+        </a>
+        <div class="status success">Результат: SUCCESS</div>
+        <p><small>Web: открывается в соседней вкладке. Desktop: открывается в браузере, затем в новой вкладке внутри Mini App.</small></p>
+    </div>
+
+    <div class="test-case">
+        <h4>Тест 3: Ссылка через HTTPS</h4>
+        <a href="https://[fcac::]:5678" style="text-decoration: none;">
+            <button>porebrik.spb.ru (HTTPS)</button>
+        </a>
+        <div class="status fail">Результат: FAIL (SSL Error)</div>
+        <p><small>The connection for this site is not secure [fcac::] sent an invalid response. err_ssl_protocol_error</small></p>
+    </div>
+
+    <div class="test-case">
+        <h4>Тест 4: JS window.open</h4>
+        <button onclick="window.open('http://[fcac::]:5678', '_blank')">porebrik.spb.ru (JS window.open)</button>
+        <div class="status success">Результат: SUCCESS</div>
+        <p><small>Аналогично тесту 2.</small></p>
+    </div>
+
+    <div class="test-case">
+        <h4>Тест 5: Iframe</h4>
+        <button onclick="document.getElementById('test-iframe').src='http://[fcac::]:5678'">Загрузить в Iframe</button>
+        <iframe id="test-iframe"></iframe>
+        <div class="status fail">Результат: FAIL (Mixed Content)</div>
+    </div>
+
+    <div class="test-case">
+        <h4>Тест 6: location.href (редирект текущей страницы)</h4>
+        <button onclick="window.location.href='http://[fcac::]:5678'">porebrik.spb.ru (Redirect)</button>
+        <div class="status fail">Результат: FAIL (Mixed Content)</div>
+    </div>
+
+    <hr>
+    <h3>Лог консоли (экспериментально)</h3>
+    <div id="log" style="background: #eee; padding: 10px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto;"></div>
+
+    <script>
+        (function() {
+            var oldLog = console.log;
+            var oldError = console.error;
+            var logElement = document.getElementById('log');
+
+            function addToLog(msg, color) {
+                var div = document.createElement('div');
+                div.style.color = color || 'black';
+                div.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+                logElement.appendChild(div);
+            }
+
+            console.log = function(message) {
+                addToLog(message, 'black');
+                oldLog.apply(console, arguments);
+            };
+            console.error = function(message) {
+                addToLog(message, 'red');
+                oldError.apply(console, arguments);
+            };
+
+            window.onerror = function(message, source, lineno, colno, error) {
+                addToLog('Global Error: ' + message, 'red');
+            };
+        })();
+    </script>
+</body>
+</html>
