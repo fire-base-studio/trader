@@ -4,22 +4,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>trader - n8n Test</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; line-height: 1.6; }
-        .test-case { margin-bottom: 20px; border-bottom: 1px solid #ccc; padding-bottom: 10px; }
-        button { cursor: pointer; padding: 10px 20px; font-size: 16px; }
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
+        }
+        header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--tg-theme-hint-color, #ccc);
+        }
+        .test-case { margin-bottom: 20px; border-bottom: 1px solid var(--tg-theme-hint-color, #ccc); padding-bottom: 10px; }
+        button {
+            cursor: pointer;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: var(--tg-theme-button-color, #8774e1);
+            color: var(--tg-theme-button-text-color, #ffffff);
+            border: none;
+            border-radius: 5px;
+        }
         .status { font-weight: bold; margin-top: 5px; }
-        .fail { color: red; }
-        .success { color: green; }
+        .fail { color: #e53935; }
+        .success { color: #43a047; }
         .pending { color: orange; }
-        iframe { width: 100%; height: 200px; border: 1px dashed #666; margin-top: 10px; }
+        iframe { width: 100%; height: 200px; border: 1px dashed var(--tg-theme-hint-color, #666); margin-top: 10px; }
+        footer {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--tg-theme-link-color, #8774e1);
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
-    <h1>trader</h1>
-    <p>Экспериментальный трейдинг-бот. Демонстрация связки Telegram Mini App → локальный n8n → JS / Lua → QUIK → брокеры → биржи.</p>
+    <header>
+        <a href="index.html" class="nav-link">← Назад на главную</a>
+    </header>
 
-    <h2>n8n: Тестирование обхода Mixed Content</h2>
+    <h1>n8n: Тестирование обхода Mixed Content</h1>
 
     <div class="test-case">
         <h4>Тест 1: Простая ссылка (HTML &lt;a&gt;)</h4>
@@ -69,9 +99,22 @@
 
     <hr>
     <h3>Лог консоли (экспериментально)</h3>
-    <div id="log" style="background: #eee; padding: 10px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto;"></div>
+    <div id="log" style="background: var(--tg-theme-secondary-bg-color, #eee); padding: 10px; font-family: monospace; font-size: 12px; max-height: 200px; overflow: auto; border-radius: 5px;"></div>
+
+    <footer>
+        <a href="index.html" class="nav-link">Вернуться на главную</a>
+    </footer>
 
     <script>
+        const webapp = window.Telegram.WebApp;
+        webapp.ready();
+
+        // Enable BackButton in Telegram UI
+        webapp.BackButton.show();
+        webapp.BackButton.onClick(() => {
+            window.location.href = 'index.html';
+        });
+
         (function() {
             var oldLog = console.log;
             var oldError = console.error;
@@ -79,22 +122,22 @@
 
             function addToLog(msg, color) {
                 var div = document.createElement('div');
-                div.style.color = color || 'black';
+                div.style.color = color || 'inherit';
                 div.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
                 logElement.appendChild(div);
             }
 
             console.log = function(message) {
-                addToLog(message, 'black');
+                addToLog(message);
                 oldLog.apply(console, arguments);
             };
             console.error = function(message) {
-                addToLog(message, 'red');
+                addToLog(message, '#e53935');
                 oldError.apply(console, arguments);
             };
 
             window.onerror = function(message, source, lineno, colno, error) {
-                addToLog('Global Error: ' + message, 'red');
+                addToLog('Global Error: ' + message, '#e53935');
             };
         })();
     </script>
