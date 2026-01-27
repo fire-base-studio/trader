@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>trader - Telegram Data</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: var(--tg-theme-bg-color, #ffffff);
+            color: var(--tg-theme-text-color, #222222);
+        }
+        header {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--tg-theme-hint-color, #ccc);
+        }
+        pre {
+            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 12px;
+        }
+        .user-card {
+            border: 1px solid var(--tg-theme-hint-color, #ccc);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .user-card img {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        footer {
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid var(--tg-theme-hint-color, #ccc);
+            text-align: center;
+        }
+        .nav-link {
+            text-decoration: none;
+            color: var(--tg-theme-link-color, #8774e1);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="nav-link">← Назад на главную</a>
+    </header>
+
+    <h1>Данные Telegram</h1>
+
+    <div id="user-info" class="user-card">
+        <h3>Данные пользователя Telegram</h3>
+        <div id="user-details">Загрузка...</div>
+    </div>
+
+    <div id="raw-data">
+        <h4>Raw Init Data</h4>
+        <pre id="init-data"></pre>
+    </div>
+
+    <div class="user-card">
+        <h3>Методы извлечения данных</h3>
+        <ul>
+            <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - сырые данные от Telegram.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe.user</code> - объект пользователя.</li>
+            <li><code>window.Telegram.WebApp.backgroundColor</code> - цвет фона из темы.</li>
+        </ul>
+    </div>
+
+    <footer>
+        <a href="index.html" class="nav-link">Вернуться на главную</a>
+    </footer>
+
+    <script>
+        const webapp = window.Telegram.WebApp;
+        webapp.ready();
+
+        // Настройка кнопки Назад
+        webapp.BackButton.show();
+        webapp.BackButton.onClick(() => {
+            window.location.href = 'index.html';
+        });
+
+        const user = webapp.initDataUnsafe.user;
+        const userDetails = document.getElementById('user-details');
+        const initDataPre = document.getElementById('init-data');
+
+        if (user) {
+            let html = '';
+            if (user.photo_url) {
+                html += `<img src="${user.photo_url}" alt="Avatar">`;
+            }
+            html += `<strong>${user.first_name} ${user.last_name || ''}</strong><br>`;
+            if (user.username) {
+                html += `<small>@${user.username}</small><br>`;
+            }
+            html += `<small>ID: ${user.id}</small>`;
+            userDetails.innerHTML = html;
+        } else {
+            userDetails.innerText = 'Пользователь не найден (запуск вне Telegram?)';
+        }
+
+        initDataPre.innerText = JSON.stringify(webapp.initDataUnsafe, null, 2);
+
+        // Применение цветов темы
+        document.body.style.setProperty('--tg-theme-bg-color', webapp.backgroundColor);
+    </script>
+</body>
+</html>

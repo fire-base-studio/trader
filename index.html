@@ -12,88 +12,42 @@
             line-height: 1.6;
             background-color: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #222222);
-        }
-        pre {
-            background: var(--tg-theme-secondary-bg-color, #f0f0f0);
-            padding: 10px;
-            border-radius: 5px;
-            overflow-x: auto;
-            font-size: 12px;
-        }
-        .user-card {
-            border: 1px solid var(--tg-theme-hint-color, #ccc);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-        .user-card img {
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            vertical-align: middle;
-            margin-right: 10px;
+            text-align: center;
         }
         footer {
             margin-top: 50px;
             padding-top: 20px;
             border-top: 1px solid var(--tg-theme-hint-color, #ccc);
-            text-align: center;
         }
         .button {
-            display: inline-block;
-            padding: 10px 20px;
+            display: block;
+            margin: 10px auto;
+            padding: 15px 20px;
             background: var(--tg-theme-button-color, #8774e1);
             color: var(--tg-theme-button-text-color, #ffffff);
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 8px;
+            max-width: 300px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <h1>trader</h1>
 
-    <div id="user-info" class="user-card">
-        <h3>Данные пользователя Telegram</h3>
-        <div id="user-details">Загрузка...</div>
-    </div>
-
-    <div id="raw-data">
-        <h4>Raw Init Data</h4>
-        <pre id="init-data"></pre>
-    </div>
-
-    <footer>
-        <nav>
-            <a href="tests.html" class="button">Тесты n8n (Mixed Content)</a>
-        </nav>
-    </footer>
+    <nav>
+        <a href="telegram_data.html" class="button">Данные Telegram SDK</a>
+        <a href="tests.html" class="button">Тесты n8n (Mixed Content)</a>
+    </nav>
 
     <script>
         const webapp = window.Telegram.WebApp;
         webapp.ready();
 
-        const user = webapp.initDataUnsafe.user;
-        const userDetails = document.getElementById('user-details');
-        const initDataPre = document.getElementById('init-data');
+        // Hide back button on main page
+        webapp.BackButton.hide();
 
-        if (user) {
-            let html = '';
-            if (user.photo_url) {
-                html += `<img src="${user.photo_url}" alt="Avatar">`;
-            }
-            html += `<strong>${user.first_name} ${user.last_name || ''}</strong><br>`;
-            if (user.username) {
-                html += `<small>@${user.username}</small><br>`;
-            }
-            html += `<small>ID: ${user.id}</small>`;
-            userDetails.innerHTML = html;
-        } else {
-            userDetails.innerText = 'Пользователь не найден (запуск вне Telegram?)';
-        }
-
-        initDataPre.innerText = JSON.stringify(webapp.initDataUnsafe, null, 2);
-
-        // Apply theme colors explicitly if needed, though CSS variables handle most
+        // Apply theme colors
         document.body.style.setProperty('--tg-theme-bg-color', webapp.backgroundColor);
     </script>
 </body>
