@@ -60,7 +60,8 @@
         <strong>trader</strong>
     </header>
 
-    <h1>Данные Telegram</h1>
+    <h1>trader</h1>
+    <h2>Данные Telegram</h2>
 
     <div id="user-info" class="user-card">
         <h3>Данные пользователя Telegram</h3>
@@ -73,16 +74,18 @@
     </div>
 
     <div class="user-card">
-        <h3>Методы Telegram SDK:</h3>
+        <h3>Методы извлечения данных Telegram</h3>
         <ul>
             <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
-            <li><code>window.Telegram.WebApp.initData</code> - данные инициализации в виде строки.</li>
-            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - данные инициализации в виде объекта.</li>
-            <li><code>window.Telegram.WebApp.themeParams</code> - параметры текущей темы Telegram.</li>
-            <li><code>window.Telegram.WebApp.colorScheme</code> - текущая цветовая схема (light/dark).</li>
-            <li><code>window.Telegram.WebApp.version</code> - версия Telegram SDK.</li>
-            <li><code>window.Telegram.WebApp.platform</code> - платформа, на которой запущено приложение.</li>
-            <li><code>window.Telegram.WebApp.viewportHeight</code> - высота области просмотра.</li>
+            <li><code>window.Telegram.WebApp.initData</code> - строка с данными инициализации (для сервера).</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - объект с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe.user</code> - объект пользователя Telegram.</li>
+            <li><code>window.Telegram.WebApp.themeParams</code> - параметры текущей темы оформления.</li>
+            <li><code>window.Telegram.WebApp.colorScheme</code> - цветовая схема (light/dark).</li>
+            <li><code>window.Telegram.WebApp.version</code> - версия Telegram Bot API.</li>
+            <li><code>window.Telegram.WebApp.platform</code> - платформа запуска (android, ios, desktop, etc).</li>
+            <li><code>window.Telegram.WebApp.viewportHeight</code> - высота видимой области приложения.</li>
+            <li><code>window.Telegram.WebApp.backgroundColor</code> - основной цвет фона.</li>
         </ul>
     </div>
 

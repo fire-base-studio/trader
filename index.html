@@ -16,6 +16,7 @@
             height: 80vh;
             background-color: var(--tg-theme-bg-color, #ffffff);
             color: var(--tg-theme-text-color, #222222);
+            text-align: center;
         }
         .button {
             display: block;
@@ -32,8 +33,10 @@
     </style>
 </head>
 <body>
-    <a href="telegram_data.html" class="button">Данные Telegram SDK</a>
-    <a href="tests.html" class="button">Тесты n8n (Mixed Content)</a>
+    <nav>
+        <a href="telegram_data.html" class="button">Данные Telegram SDK</a>
+        <a href="tests.html" class="button">Тесты n8n (Mixed Content)</a>
+    </nav>
 
     <script>
         const webapp = window.Telegram.WebApp;
