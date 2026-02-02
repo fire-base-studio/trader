@@ -57,21 +57,7 @@
     </header>
 
     <h1>trader</h1>
-
-    <div class="user-card">
-        <h3>Методы извлечения данных</h3>
-        <ul>
-            <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
-            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - сырые данные от Telegram.</li>
-            <li><code>window.Telegram.WebApp.initDataUnsafe.user</code> - объект пользователя.</li>
-            <li><code>window.Telegram.WebApp.themeParams</code> - параметры темы оформления.</li>
-            <li><code>window.Telegram.WebApp.colorScheme</code> - цветовая схема (light/dark).</li>
-        </ul>
-    </div>
-
-    <hr>
-
-    <h1>Данные Telegram</h1>
+    <h2>Данные Telegram</h2>
 
     <div id="user-info" class="user-card">
         <h3>Данные пользователя Telegram</h3>
@@ -83,6 +69,17 @@
         <pre id="init-data"></pre>
     </div>
 
+    <div class="user-card">
+        <h3>Методы извлечения данных Telegram</h3>
+        <ul>
+            <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
+            <li><code>window.Telegram.WebApp.initData</code> - сырая строка с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - объект с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.themeParams</code> - параметры текущей темы.</li>
+            <li><code>window.Telegram.WebApp.colorScheme</code> - текущая цветовая схема.</li>
+            <li><code>window.Telegram.WebApp.backgroundColor</code> - цвет фона из темы.</li>
+        </ul>
+    </div>
 
     <footer>
         <a href="index.html" class="nav-link">Вернуться на главную</a>
