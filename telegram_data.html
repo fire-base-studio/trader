@@ -72,9 +72,13 @@
         <h3>Методы извлечения данных</h3>
         <ul>
             <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
-            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - сырые данные от Telegram.</li>
-            <li><code>window.Telegram.WebApp.initDataUnsafe.user</code> - объект пользователя.</li>
-            <li><code>window.Telegram.WebApp.backgroundColor</code> - цвет фона из темы.</li>
+            <li><code>window.Telegram.WebApp.initData</code> - строка с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - объект с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.themeParams</code> - параметры текущей темы оформления.</li>
+            <li><code>window.Telegram.WebApp.colorScheme</code> - цветовая схема (light/dark).</li>
+            <li><code>window.Telegram.WebApp.version</code> - версия Bot API.</li>
+            <li><code>window.Telegram.WebApp.platform</code> - платформа пользователя.</li>
+            <li><code>window.Telegram.WebApp.viewportHeight</code> - высота видимой области.</li>
         </ul>
     </div>
 
@@ -87,10 +91,12 @@
         webapp.ready();
 
         // Настройка кнопки Назад
-        webapp.BackButton.show();
-        webapp.BackButton.onClick(() => {
-            window.location.href = 'index.html';
-        });
+        if (webapp.BackButton) {
+            webapp.BackButton.show();
+            webapp.BackButton.onClick(() => {
+                window.location.href = 'index.html';
+            });
+        }
 
         const user = webapp.initDataUnsafe.user;
         const userDetails = document.getElementById('user-details');

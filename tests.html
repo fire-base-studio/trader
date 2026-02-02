@@ -110,10 +110,12 @@
         webapp.ready();
 
         // Enable BackButton in Telegram UI
-        webapp.BackButton.show();
-        webapp.BackButton.onClick(() => {
-            window.location.href = 'index.html';
-        });
+        if (webapp.BackButton) {
+            webapp.BackButton.show();
+            webapp.BackButton.onClick(() => {
+                window.location.href = 'index.html';
+            });
+        }
 
         (function() {
             var oldLog = console.log;
