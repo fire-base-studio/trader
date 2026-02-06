@@ -60,8 +60,7 @@
         <strong>trader</strong>
     </header>
 
-    <h1>trader</h1>
-    <h2>Данные Telegram</h2>
+    <h1>Данные Telegram SDK</h1>
 
     <div id="user-info" class="user-card">
         <h3>Данные пользователя Telegram</h3>
@@ -69,10 +68,28 @@
     </div>
 
     <div id="raw-data">
-        <h4>Raw Init Data</h4>
+        <h4>Raw Init Data (initDataUnsafe)</h4>
         <pre id="init-data"></pre>
     </div>
 
+    <div class="user-card">
+        <h3>Методы извлечения данных Telegram</h3>
+        <ul>
+            <li><code>window.Telegram.WebApp.ready()</code> - сообщает, что приложение готово.</li>
+            <li><code>window.Telegram.WebApp.initData</code> - строка с данными инициализации (для сервера).</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe</code> - объект с данными инициализации.</li>
+            <li><code>window.Telegram.WebApp.initDataUnsafe.user</code> - объект пользователя Telegram.</li>
+            <li><code>window.Telegram.WebApp.themeParams</code> - параметры текущей темы оформления.</li>
+            <li><code>window.Telegram.WebApp.colorScheme</code> - цветовая схема (light/dark).</li>
+            <li><code>window.Telegram.WebApp.version</code> - версия Telegram Bot API.</li>
+            <li><code>window.Telegram.WebApp.platform</code> - платформа запуска (android, ios, desktop, etc).</li>
+            <li><code>window.Telegram.WebApp.viewportHeight</code> - высота видимой области приложения.</li>
+            <li><code>window.Telegram.WebApp.viewportVisibleHeight</code> - высота видимой области, за вычетом перекрытых элементов.</li>
+            <li><code>window.Telegram.WebApp.isExpanded</code> - развернуто ли приложение на весь экран.</li>
+            <li><code>window.Telegram.WebApp.backgroundColor</code> - основной цвет фона.</li>
+            <li><code>window.Telegram.WebApp.headerColor</code> - цвет заголовка.</li>
+        </ul>
+    </div>
 
     <footer>
         <a href="index.html" class="nav-link">Вернуться на главную</a>
@@ -82,7 +99,7 @@
         const webapp = window.Telegram.WebApp;
         webapp.ready();
 
-        // Настройка кнопки Назад
+        // Настройка кнопки Назад в Telegram UI
         if (webapp.BackButton) {
             webapp.BackButton.show();
             webapp.BackButton.onClick(() => {
