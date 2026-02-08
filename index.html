@@ -1,3 +1,4 @@
+<!-- Main Navigation Page -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -31,16 +32,19 @@
             font-weight: bold;
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const webapp = window.Telegram.WebApp;
+            webapp.ready();
+            webapp.BackButton.hide();
+            if (webapp.backgroundColor) {
+                document.body.style.setProperty('--tg-theme-bg-color', webapp.backgroundColor);
+            }
+        });
+    </script>
 </head>
 <body>
     <a href="telegram_data.html" class="button">Данные Telegram SDK</a>
     <a href="methods.html" class="button">Методы Telegram SDK</a>
-
-    <script>
-        const webapp = window.Telegram.WebApp;
-        webapp.ready();
-        webapp.BackButton.hide();
-        document.body.style.setProperty('--tg-theme-bg-color', webapp.backgroundColor);
-    </script>
 </body>
 </html>
